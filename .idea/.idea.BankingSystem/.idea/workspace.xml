@@ -27,16 +27,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7d2321e6-092b-46df-99d7-422938311f4a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/ApiGateway/obj/Debug/net8.0/ApiGateway.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApiGateway/obj/Debug/net8.0/ApiGateway.AssemblyInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApiGateway/obj/Debug/net8.0/ApiGateway.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/ApiGateway/obj/Debug/net8.0/ApiGateway.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CustomerRegistration.API/obj/Debug/net8.0/CustomerRegistration.API.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CustomerRegistration.API/obj/Debug/net8.0/CustomerRegistration.API.AssemblyInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CustomerRegistration.API/obj/Debug/net8.0/CustomerRegistration.API.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/CustomerRegistration.API/obj/Debug/net8.0/CustomerRegistration.API.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MoneyTransfer.API/obj/Debug/net8.0/MoneyTransfer.API.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MoneyTransfer.API/obj/Debug/net8.0/MoneyTransfer.API.AssemblyInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MoneyTransfer.API/obj/Debug/net8.0/MoneyTransfer.API.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/MoneyTransfer.API/obj/Debug/net8.0/MoneyTransfer.API.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Notification.API/obj/Debug/net8.0/Notification.API.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Notification.API/obj/Debug/net8.0/Notification.API.AssemblyInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Notification.API/obj/Debug/net8.0/Notification.API.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Notification.API/obj/Debug/net8.0/Notification.API.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserManagement.API/obj/Debug/net8.0/UserManagement.API.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UserManagement.API/obj/Debug/net8.0/UserManagement.API.AssemblyInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserManagement.API/obj/Debug/net8.0/UserManagement.API.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/UserManagement.API/obj/Debug/net8.0/UserManagement.API.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.BankingSystem/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BankingSystem/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,18 +40,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "ozenirgokberk"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;ozenirgokberk&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/ozenirgokberk/caseBPN.git",
-    "accountId": "3c65f804-073d-41e0-b3fa-a9c752d7e46a"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/ozenirgokberk/caseBPN.git&quot;,
+    &quot;accountId&quot;: &quot;3c65f804-073d-41e0-b3fa-a9c752d7e46a&quot;
   }
-}]]></component>
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/21ab41e23ad44bdb8b928e2f143dab6554e00/41/b60bfb78/ConnectionFactory.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/658ad1fa108317d78bcae889b6e4f9dd5327babb6582972f2dbeabf36dafa5/ServiceProvider.cs" root0="SKIP_HIGHLIGHTING" />
@@ -70,9 +61,9 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2uP21tUNCM6CcrbeQGC1tcZUjop" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -86,6 +77,7 @@
     ".NET Launch Settings Profile.CustomerRegistration.API: http.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -376,7 +368,10 @@
       <method v="2" />
     </configuration>
     <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
-      <deployment type="dockerfile" />
+      <deployment type="dockerfile">
+        <settings />
+      </deployment>
+      <EXTENSION ID="com.jetbrains.rider.docker.debug" isFastModeEnabled="true" isSslEnabled="false" />
       <method v="2" />
     </configuration>
   </component>
