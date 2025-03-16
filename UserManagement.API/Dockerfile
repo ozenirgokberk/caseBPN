@@ -6,13 +6,14 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 COPY ["UserManagement.API/UserManagement.API.csproj", "UserManagement.API/"]
-RUN dotnet restore "UserManagement.API/UserManagement.API.csproj"
+RUN dotnet restore "UserManagement.API/UserManagement.API.csproj" --disable-parallel
 COPY . .
 WORKDIR "/src/UserManagement.API"
+RUN dotnet restore
 RUN dotnet build "UserManagement.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "UserManagement.API.csproj" -c Release -o /app/publish
+RUN dotnet publish "UserManagement.API.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
