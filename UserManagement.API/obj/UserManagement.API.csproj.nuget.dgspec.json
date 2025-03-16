@@ -4,14 +4,14 @@
     "/Users/ozenirgokberk/Repositories/case/BankingSystem/UserManagement.API/UserManagement.API.csproj": {}
   },
   "projects": {
-    "/Users/ozenirgokberk/Repositories/case/BankingSystem/UserManagement.API/UserManagement.API.csproj": {
+    "/Users/ozenirgokberk/Repositories/case/BankingSystem/Shared/Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/ozenirgokberk/Repositories/case/BankingSystem/UserManagement.API/UserManagement.API.csproj",
-        "projectName": "UserManagement.API",
-        "projectPath": "/Users/ozenirgokberk/Repositories/case/BankingSystem/UserManagement.API/UserManagement.API.csproj",
+        "projectUniqueName": "/Users/ozenirgokberk/Repositories/case/BankingSystem/Shared/Shared.csproj",
+        "projectName": "Shared",
+        "projectPath": "/Users/ozenirgokberk/Repositories/case/BankingSystem/Shared/Shared.csproj",
         "packagesPath": "/Users/ozenirgokberk/.nuget/packages/",
-        "outputPath": "/Users/ozenirgokberk/Repositories/case/BankingSystem/UserManagement.API/obj/",
+        "outputPath": "/Users/ozenirgokberk/Repositories/case/BankingSystem/Shared/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/ozenirgokberk/.nuget/NuGet/NuGet.Config"
@@ -43,6 +43,78 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.Extensions.Configuration.Abstractions": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "RabbitMQ.Client": {
+              "target": "Package",
+              "version": "[6.8.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.204/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/ozenirgokberk/Repositories/case/BankingSystem/UserManagement.API/UserManagement.API.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/ozenirgokberk/Repositories/case/BankingSystem/UserManagement.API/UserManagement.API.csproj",
+        "projectName": "UserManagement.API",
+        "projectPath": "/Users/ozenirgokberk/Repositories/case/BankingSystem/UserManagement.API/UserManagement.API.csproj",
+        "packagesPath": "/Users/ozenirgokberk/.nuget/packages/",
+        "outputPath": "/Users/ozenirgokberk/Repositories/case/BankingSystem/UserManagement.API/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/ozenirgokberk/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/Users/ozenirgokberk/Repositories/case/BankingSystem/Shared/Shared.csproj": {
+                "projectPath": "/Users/ozenirgokberk/Repositories/case/BankingSystem/Shared/Shared.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
             "AutoMapper.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
               "version": "[12.0.1, )"
@@ -53,25 +125,25 @@
             },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
-              "version": "[8.0.2, )"
+              "version": "[8.0.1, )"
             },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
-              "version": "[8.0.4, )"
+              "version": "[8.0.1, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[9.0.3, )"
+              "version": "[8.0.1, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[9.0.3, )"
+              "version": "[8.0.1, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[9.0.3, )"
+              "version": "[8.0.1, )"
             },
             "RabbitMQ.Client": {
               "target": "Package",
@@ -79,7 +151,7 @@
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[6.4.0, )"
+              "version": "[6.5.0, )"
             }
           },
           "imports": [

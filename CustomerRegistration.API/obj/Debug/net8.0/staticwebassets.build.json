@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "EzblkfeaSFWRsRmpPFQdGzMZs9uLwS0CtwGHXwDXWUo=",
+  "Source": "CustomerRegistration.API",
+  "BasePath": "_content/CustomerRegistration.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

@@ -1,88 +1,9 @@
 version: '3.8'
 
 services:
-  apigateway:
-    build:
-      context: .
-      dockerfile: ApiGateway/Dockerfile
-    ports:
-      - "8000:80"
-    depends_on:
-      - usermanagement.api
-      - customerregistration.api
-      - moneytransfer.api
-      - notification.api
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-
-  usermanagement.api:
-    build:
-      context: .
-      dockerfile: UserManagement.API/Dockerfile
-    ports:
-      - "8001:80"
-    depends_on:
-      - sqlserver
-      - rabbitmq
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=UserManagementDb;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True
-      - RabbitMQ__Host=rabbitmq
-
-  customerregistration.api:
-    build:
-      context: .
-      dockerfile: CustomerRegistration.API/Dockerfile
-    ports:
-      - "8002:80"
-    depends_on:
-      - sqlserver
-      - rabbitmq
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=CustomerRegistrationDb;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True
-      - RabbitMQ__Host=rabbitmq
-
-  moneytransfer.api:
-    build:
-      context: .
-      dockerfile: MoneyTransfer.API/Dockerfile
-    ports:
-      - "8003:80"
-    depends_on:
-      - sqlserver
-      - rabbitmq
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=MoneyTransferDb;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True
-      - RabbitMQ__Host=rabbitmq
-
-  notification.api:
-    build:
-      context: .
-      dockerfile: Notification.API/Dockerfile
-    ports:
-      - "8004:80"
-    depends_on:
-      - sqlserver
-      - rabbitmq
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=NotificationDb;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True
-      - RabbitMQ__Host=rabbitmq
-
-  sqlserver:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=YourStrong!Passw0rd
-    ports:
-      - "1433:1433"
-    volumes:
-      - sqlserver_data:/var/opt/mssql
-
   rabbitmq:
-    image: rabbitmq:3-management
+    image: rabbitmq:3.12-management
+    container_name: banking-rabbitmq
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -91,7 +12,87 @@ services:
       - RABBITMQ_DEFAULT_PASS=guest
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "check_port_connectivity"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  sql-server:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: banking-sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong@Passw0rd
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    healthcheck:
+      test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "YourStrong@Passw0rd" -Q "SELECT 1" || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: ApiGateway/Dockerfile
+    container_name: banking-gateway
+    ports:
+      - "5000:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - user-management-api
+      - money-transfer-api
+      - notification-api
+
+  user-management-api:
+    build:
+      context: .
+      dockerfile: UserManagement.API/Dockerfile
+    container_name: banking-user-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sql-server;Database=UserManagementDb;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True
+      - RabbitMQ__Host=rabbitmq
+    depends_on:
+      sql-server:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+  money-transfer-api:
+    build:
+      context: .
+      dockerfile: MoneyTransfer.API/Dockerfile
+    container_name: banking-transfer-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sql-server;Database=MoneyTransferDb;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True
+      - RabbitMQ__Host=rabbitmq
+    depends_on:
+      sql-server:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+  notification-api:
+    build:
+      context: .
+      dockerfile: Notification.API/Dockerfile
+    container_name: banking-notification-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sql-server;Database=NotificationDb;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True
+      - RabbitMQ__Host=rabbitmq
+    depends_on:
+      sql-server:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
 
 volumes:
-  sqlserver_data:
-  rabbitmq_data: 
+  rabbitmq_data:
+  sqlserver_data: 

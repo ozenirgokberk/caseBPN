@@ -9,7 +9,6 @@ using UserManagement.API.Core.Application.DTOs.Auth;
 using UserManagement.API.Core.Application.DTOs.User;
 using UserManagement.API.Core.Application.Interfaces;
 using UserManagement.API.Core.Domain.Entities;
-using UserManagement.API.Infrastructure.Authentication;
 
 namespace UserManagement.API.Infrastructure.Services;
 
@@ -34,15 +33,11 @@ public class AuthService : IAuthService
             throw new UnauthorizedAccessException("Invalid username or password");
         }
 
-        if (!PasswordService.VerifyPassword(loginDto.Password, user.PasswordHash, user.PasswordSalt))
+        // Verify password hash
+        if (!VerifyPasswordHash(loginDto.Password, user.PasswordHash, user.PasswordSalt))
         {
             throw new UnauthorizedAccessException("Invalid username or password");
         }
-
-        // Update last login information
-        user.LastLoginAt = DateTime.UtcNow;
-        user.LastLoginIp = loginDto.IpAddress;
-        await _userRepository.UpdateAsync(user);
 
         var userDto = _mapper.Map<UserDto>(user);
         var token = GenerateJwtToken(userDto);
@@ -50,16 +45,18 @@ public class AuthService : IAuthService
 
         user.RefreshToken = refreshToken;
         user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
+        user.LastLoginAt = DateTime.UtcNow;
         await _userRepository.UpdateAsync(user);
 
         return new AuthResponseDto
         {
-            Token = token,
+            AccessToken = token,
             RefreshToken = refreshToken,
             ExpirationTime = DateTime.UtcNow.AddMinutes(15),
             Username = user.Username,
             Role = user.Role,
-            LastLoginAt = user.LastLoginAt
+            LastLoginAt = user.LastLoginAt ?? DateTime.UtcNow,
+            User = userDto
         };
     }
 
@@ -106,16 +103,18 @@ public class AuthService : IAuthService
 
         user.RefreshToken = newRefreshToken;
         user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
+        user.LastLoginAt = DateTime.UtcNow;
         await _userRepository.UpdateAsync(user);
 
         return new AuthResponseDto
         {
-            Token = newToken,
+            AccessToken = newToken,
             RefreshToken = newRefreshToken,
             ExpirationTime = DateTime.UtcNow.AddMinutes(15),
             Username = user.Username,
             Role = user.Role,
-            LastLoginAt = user.LastLoginAt
+            LastLoginAt = user.LastLoginAt ?? DateTime.UtcNow,
+            User = userDto
         };
     }
 
@@ -128,7 +127,6 @@ public class AuthService : IAuthService
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new Claim(ClaimTypes.Name, user.Username),
-            new Claim(ClaimTypes.Email, user.Email),
             new Claim(ClaimTypes.Role, user.Role)
         };
 
@@ -164,4 +162,11 @@ public class AuthService : IAuthService
         await _userRepository.UpdateAsync(user);
         return true;
     }
-} 
+
+    private bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
+    {
+        using var hmac = new HMACSHA512(storedSalt);
+        var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+        return computedHash.SequenceEqual(storedHash);
+    }
+}

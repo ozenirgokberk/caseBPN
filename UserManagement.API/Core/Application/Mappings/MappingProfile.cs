@@ -20,8 +20,12 @@ public class MappingProfile : Profile
             .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
         CreateMap<User, AuthResponseDto>()
-            .ForMember(dest => dest.Token, opt => opt.Ignore())
+            .ForMember(dest => dest.AccessToken, opt => opt.Ignore())
             .ForMember(dest => dest.RefreshToken, opt => opt.Ignore())
-            .ForMember(dest => dest.ExpirationTime, opt => opt.Ignore());
+            .ForMember(dest => dest.ExpirationTime, opt => opt.Ignore())
+            .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.Username))
+            .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role))
+            .ForMember(dest => dest.LastLoginAt, opt => opt.MapFrom(src => src.LastLoginAt))
+            .ForMember(dest => dest.User, opt => opt.MapFrom(src => src));
     }
 } 

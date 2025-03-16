@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MoneyTransfer.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+100ea5cfddcd165b5874d4f8df548ddd454d8dd3")]
 [assembly: System.Reflection.AssemblyProductAttribute("MoneyTransfer.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MoneyTransfer.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
