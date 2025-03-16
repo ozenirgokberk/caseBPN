@@ -5,9 +5,13 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
+
+# Copy csproj and restore as distinct layers
 COPY ["UserManagement.API/UserManagement.API.csproj", "UserManagement.API/"]
 COPY ["Shared/Shared.csproj", "Shared/"]
 RUN dotnet restore "UserManagement.API/UserManagement.API.csproj"
+
+# Copy everything else and build
 COPY . .
 WORKDIR "/src/UserManagement.API"
 RUN dotnet build "UserManagement.API.csproj" -c Release -o /app/build
@@ -18,4 +22,12 @@ RUN dotnet publish "UserManagement.API.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+# Add non-root user
+RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /app
+USER appuser
+
+HEALTHCHECK --interval=30s --timeout=3s \
+    CMD curl -f http://localhost/health || exit 1
+
 ENTRYPOINT ["dotnet", "UserManagement.API.dll"] 
