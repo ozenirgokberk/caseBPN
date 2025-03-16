@@ -1,0 +1,97 @@
+version: '3.8'
+
+services:
+  apigateway:
+    build:
+      context: .
+      dockerfile: ApiGateway/Dockerfile
+    ports:
+      - "8000:80"
+    depends_on:
+      - usermanagement.api
+      - customerregistration.api
+      - moneytransfer.api
+      - notification.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  usermanagement.api:
+    build:
+      context: .
+      dockerfile: UserManagement.API/Dockerfile
+    ports:
+      - "8001:80"
+    depends_on:
+      - sqlserver
+      - rabbitmq
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=UserManagementDb;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True
+      - RabbitMQ__Host=rabbitmq
+
+  customerregistration.api:
+    build:
+      context: .
+      dockerfile: CustomerRegistration.API/Dockerfile
+    ports:
+      - "8002:80"
+    depends_on:
+      - sqlserver
+      - rabbitmq
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=CustomerRegistrationDb;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True
+      - RabbitMQ__Host=rabbitmq
+
+  moneytransfer.api:
+    build:
+      context: .
+      dockerfile: MoneyTransfer.API/Dockerfile
+    ports:
+      - "8003:80"
+    depends_on:
+      - sqlserver
+      - rabbitmq
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=MoneyTransferDb;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True
+      - RabbitMQ__Host=rabbitmq
+
+  notification.api:
+    build:
+      context: .
+      dockerfile: Notification.API/Dockerfile
+    ports:
+      - "8004:80"
+    depends_on:
+      - sqlserver
+      - rabbitmq
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=NotificationDb;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True
+      - RabbitMQ__Host=rabbitmq
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong!Passw0rd
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+volumes:
+  sqlserver_data:
+  rabbitmq_data: 
